@@ -1,0 +1,26 @@
+compilation command : gcc -g -fno-stack-protector -z execstack -no-pie -o vulnerable_program test1.c
+
+
+
+
+###############  variabel buffer overflow #######################
+
+execuation command : ./vulnerable_program < var_buf_overflow.bin
+
+
+
+
+
+###############skip the if in the main by overwritting the returning address of login() func #######################
+
+execuation command : ./vulnerable_program < combined_input.bin
+
+
+
+
+############### calling debug_show_all_passwords func by overwritting the returning address of login() func #######################
+
+execuation command : ./vulnerable_program < combined_input_show.bin
+
+
+

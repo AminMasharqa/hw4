@@ -1,3 +1,5 @@
+// alamin masharqa 207358326            adan fadila 314705062 
+
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -5,22 +7,13 @@
 #include <stdlib.h>
 
 #define MAX_LENGTH 8
-#define USERNAME_SIZE 40
-#define PASSWORD_SIZE 40
+ 
 #define FILENAME "users.txt"
 
-char PASSWORD[10] = "amin123";
-
-// Signal handler for SIGSEGV
-void sigsegv_handler(int signum) {
-    printf("Caught segmentation fault (SIGSEGV). Signal number: %d\n", signum);
-    // Perform cleanup or logging here
-    exit(1);
-}
 
 void debug_show_all_passwords() {
-    char file_username[USERNAME_SIZE];
-    char file_password[PASSWORD_SIZE];
+    char file_username[MAX_LENGTH];
+    char file_password[MAX_LENGTH];
 
     FILE *file = fopen(FILENAME, "r");
     if (file == NULL) {
@@ -29,8 +22,10 @@ void debug_show_all_passwords() {
     }
 
     printf("Registered users and passwords:\n");
-    while (fscanf(file, "%s %s", file_username, file_password) != EOF) {
-        printf("Username: %s, Password: %s\n", file_username, file_password);
+    while (fscanf(file, "%s", file_username ) != EOF) {
+        fscanf(file, "%s", file_username);
+        printf("Username: %s", file_username);
+        
     }
 
     fclose(file);
@@ -38,11 +33,12 @@ void debug_show_all_passwords() {
 }
 
 bool login() {
-    char file_username[USERNAME_SIZE] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    char file_password[PASSWORD_SIZE] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    char username[USERNAME_SIZE] = {5, 5, 5, 5, 5, 5};
-    bool authenticated = false;
-    char password[PASSWORD_SIZE] = {6, 6, 6, 6, 6, 6};
+
+    volatile bool authenticated = false;
+    char password[MAX_LENGTH] = {6, 6, 6, 6, 6, 6,6};
+    char username[MAX_LENGTH] = {5, 5, 5, 5, 5, 5,5};
+    char file_username[MAX_LENGTH] = {1, 2, 3, 4, 5, 6, 7};
+    char file_password[MAX_LENGTH] = {1, 2, 3, 4, 5, 6, 7};
 
     printf("Enter username: ");
     gets(username);  // Unsafe function, susceptible to buffer overflow
@@ -67,19 +63,15 @@ bool login() {
     return authenticated;
 }
 
-int main() {
-    // Set up signal handler for SIGSEGV
-    signal(SIGSEGV, sigsegv_handler);
-
-    if (login() == true)
-        printf("\nyou are authenticated!\n");
+int main(int argc, char const *argv[])
+{
+    if(login()!= false)
+        printf("YOU ARE AUTHENTICATED !\n");
     else
-        printf("\nyou are not authenticated!\n");
+        printf("YOU ARE not AUTHENTICATED !\n");
 
-
-    // if (login() == true)
-    //     debug_show_all_passwords();
-
+    
 
     return 0;
 }
+
